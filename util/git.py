@@ -74,6 +74,7 @@ class Git():
         cmd.append('git checkout -q ' + branch)
         cmd.append('git fetch -q --all')
         cmd.append('git reset -q --hard origin/' + branch)
+        cmd.append('git log -20 --pretty=\"%h - %an %s\"')
 
         return Runner([{'conn': 'local'}]).run('raw', ' && '.join(cmd))
 
