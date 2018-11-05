@@ -53,7 +53,7 @@ def task_deploy():
     model = Task.query.get(request.form['id'])
 
     if deploy(model):
-        task.status = 2
+        model.status = 2
         db.session.commit()
 
         return jsonify({'status': True})
@@ -79,9 +79,15 @@ def deploy(task):
     runner = Runner(hosts)
 
     # 部署代码
-    code_dir = '/data/code/' + task.version
+    # code_dir = '/data/code/' + task.version
+    # deploy_dir = project.directory
+    # temp_file = '/tmp/' + str(uuid.uuid4().hex)
+    # runner.run('copy', {'src': file, 'dest': temp_file})
+
+    # 部署代码
+    code_dir = project.save_directory.rstrip('/') + '/' + task.version
     deploy_dir = project.directory
-    temp_file = '/tmp/' + str(uuid.uuid4().hex)
+    temp_file = project.save_directory.rstrip('/') + '/tmp/' + str(uuid.uuid4().hex)
     runner.run('copy', {'src': file, 'dest': temp_file})
 
     # 创建源码目录和布署软连接的父目录
@@ -127,3 +133,43 @@ def pack(workdir, repository, branch, version):
     Runner([{'conn': 'local'}]).run('raw', cmd)
 
     return workdir + temp_file
+
+
+@api.route('/task/branch', methods=["POST"])
+def task_branch():
+    project = Project.query.get(request.form['id'])
+    workdir = "./runtime/{}/".format(project.id)
+    git = Git(project.repository, workdir + "git/")
+    fetch  = git.searchBranch()
+
+    remotes = []
+
+    for m in fetch[0][1][1].split('\n '):
+        if m.find('* master') > -1:
+            continue
+        if m.find(' remotes/origin/HEAD') > -1:
+            continue
+        if m.find('remotes/origin') == -1:
+            continue
+        remotes.append(m.lstrip()[15:])
+
+    return jsonify({'status': True, 'data':remotes})
+
+
+@api.route('/task/version', methods=["POST"])
+def task_version():
+    branch = request.form['branch']
+    project = Project.query.get(request.form['id'])
+    workdir = "./runtime/{}/".format(project.id)
+    git = Git(project.repository, workdir + "git/")
+
+    version = git.searchVersion(branch)
+
+    versions = []
+    for m in version[0][1][1].split('\n'):
+
+        versions.append({'version': m[:6], 'name': m[10:]})
+
+    print(versions)
+
+    return jsonify({'status': True, 'data':versions})
