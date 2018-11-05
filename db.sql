@@ -57,6 +57,7 @@ CREATE TABLE `project` (
   `name` varchar(50) NOT NULL DEFAULT '' COMMENT '项目名称',
   `repository` varchar(255) NOT NULL DEFAULT '' COMMENT '代码仓库',
   `machine_ids` varchar(255) NOT NULL DEFAULT '' COMMENT '发布主机 eg. [1,2,3]',
+  `save_directory` varchar(255) NOT NULL DEFAULT '' COMMENT '代码存放目录',
   `directory` varchar(255) NOT NULL DEFAULT '' COMMENT '发布目录',
   `pre_deploy` text COMMENT '前置任务',
   `post_release` text COMMENT '后置任务',

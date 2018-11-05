@@ -39,6 +39,7 @@ class Project(db.Model):
     repository = db.Column(db.String(255), nullable=False, server_default=db.FetchedValue())
     machine_ids = db.Column(db.String(255), nullable=False, server_default=db.FetchedValue())
     directory = db.Column(db.String(255), nullable=False, server_default=db.FetchedValue())
+    save_directory = db.Column(db.String(255), nullable=False, server_default=db.FetchedValue())
     pre_deploy = db.Column(db.Text)
     post_release = db.Column(db.Text)
     created_at = db.Column(db.DateTime, nullable=False, server_default=db.FetchedValue())
