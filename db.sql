@@ -66,6 +66,7 @@ CREATE TABLE `project` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COMMENT='项目';
 
 
+
 DROP TABLE IF EXISTS task;
 CREATE TABLE `task` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,4 +82,8 @@ CREATE TABLE `task` (
 
 insert into user (username,password) values ('root',md5('root'));
 insert into user (username,password) values ('dev',md5('dev'));
+
+
+
+-- alter table project add  `save_directory` varchar(255) NOT NULL DEFAULT '' COMMENT '代码存放目录' after machine_ids;
 
