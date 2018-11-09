@@ -20,6 +20,17 @@ def machine():
     return jsonify({"status": True, "data": [to_dict(m, append_columns=['cpu', 'mem']) for m in models]})
 
 
+@api.route('/machine/get')
+def machine_get():
+
+    model = Machine.query.get(request.args['id'])
+
+    machine = {'host': model.ip, "user": model.user, 'password': model.password, 'name': model.name}
+    return jsonify({"status": True, "data": machine})
+
+
+
+
 @api.route('/machine/create', methods=['POST'])
 def machine_create():
     model = Machine()

@@ -87,7 +87,9 @@ def deploy(task):
     # 部署代码
     code_dir = project.save_directory.rstrip('/') + '/' + task.version
     deploy_dir = project.directory
-    temp_file = project.save_directory.rstrip('/') + '/tmp/' + str(uuid.uuid4().hex)
+    # temp_file = project.save_directory.rstrip('/') + '/tmp/' + str(uuid.uuid4().hex)
+    # 如果中间有tmp 需要手动新建tmp不然会显示没有当前文件夹
+    temp_file = project.save_directory.rstrip('/') + '/' + str(uuid.uuid4().hex)
     runner.run('copy', {'src': file, 'dest': temp_file})
 
     # 创建源码目录和布署软连接的父目录
