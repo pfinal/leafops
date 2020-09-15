@@ -8,7 +8,7 @@ class Action():
         '''
         :param conn: Connection
         :param module: raw ping script copy
-        :param param: 根据module不同，param可能为string或dist
+        :param param: 根据module不同，param可能为string或dict
         '''
         self.conn = conn
         self.module = module

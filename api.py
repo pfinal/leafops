@@ -1,3 +1,4 @@
+# pip3 install paramiko flask sqlalchemy flask_sqlalchemy -i https://pypi.tuna.tsinghua.edu.cn/simple
 import random
 import datetime
 

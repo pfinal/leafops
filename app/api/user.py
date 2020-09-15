@@ -11,7 +11,7 @@ from app.model.user import User
 
 @api.route('/user')
 def user():
-    users = User.query.order_by('id desc').all()
+    users = User.query.order_by(User.id.desc()).all()
 
     return jsonify({'status': True, 'data': [to_dict(obj, ['id', 'username', 'created_at']) for obj in users]})
     # return dumps([to_dict(obj) for obj in users], ensure_ascii=False)

@@ -8,7 +8,7 @@ from runner import Runner
 
 @api.route('/machine')
 def machine():
-    query = Machine.query.order_by('id desc')
+    query = Machine.query.order_by(Machine.id.desc())
 
     print(request.args.get('name'))
 

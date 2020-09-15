@@ -10,7 +10,7 @@ from app.model.project import Project
 def project():
     return_data = []
 
-    models = Project.query.order_by('id desc').all()
+    models = Project.query.order_by(Project.id.desc()).all()
 
     return jsonify({'status': True, 'data': [to_dict(m, append_columns=['machine_names']) for m in models]})
 

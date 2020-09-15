@@ -20,7 +20,7 @@ from runner import Runner
 
 @api.route('/task')
 def task():
-    models = Task.query.order_by('id desc').all()
+    models = Task.query.order_by(Task.id.desc()).all()
     return jsonify({"status": True, 'data': [to_dict(m, append_columns=['project_name']) for m in models]})
 
 
